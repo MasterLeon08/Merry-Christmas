@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Giáng Sinh Vui Vẻ!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #0a2e38, #1a5f7a);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            margin: 20px;
+        }
+        
+        h1 {
+            color: #ff3366;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff3366;
+            animation: pulse 2s infinite;
+        }
+        
+        h2 {
+            color: #4dff88;
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        /* Cây thông Noel */
+        .tree-container {
+            margin: 30px 0;
+            position: relative;
+            height: 280px;
+        }
+        
+        .tree {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+        }
+        
+        .tree-part {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #0a5;
+        }
+        
+        .tree-part:nth-child(1) {
+            top: 20px;
+            border-bottom-color: #0a5;
+            width: 0;
+            height: 0;
+        }
+        
+        .tree-part:nth-child(2) {
+            top: 70px;
+            border-bottom-color: #0a5;
+            width: 0;
+            height: 0;
+            border-left-width: 60px;
+            border-right-width: 60px;
+            border-bottom-width: 90px;
+        }
+        
+        .tree-part:nth-child(3) {
+            top: 120px;
+            border-bottom-color: #0a5;
+            width: 0;
+            height: 0;
+            border-left-width: 70px;
+            border-right-width: 70px;
+            border-bottom-width: 100px;
+        }
+        
+        .trunk {
+            position: absolute;
+            top: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            background: #8B4513;
+            border-radius: 0 0 5px 5px;
+
+        }
+          /* NGÔI SAO VÀNG TRÊN ĐỈNH CÂY */
+        .star {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: gold;
+            clip-path: polygon(
+                50% 0%, 
+                61% 35%, 
+                98% 35%, 
+                68% 57%, 
+                79% 91%, 
+                50% 70%, 
+                21% 91%, 
+                32% 57%, 
+                2% 35%, 
+                39% 35%
+            );
+            z-index: 10;
+            animation: starTwinkle 1.5s infinite alternate, starRotate 8s infinite linear;
+            box-shadow: 0 0 20px gold, 0 0 40px orange;
+        }
+        
+        /* Hiệu ứng tia sáng tỏa ra từ ngôi sao */
+        .star-rays {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,215,0,0) 70%);
+            animation: raysPulse 2s infinite alternate;
+            z-index: 9;
+        }
+        
+        /* Đèn nhấp nháy trên cây */
+        .light {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        
+
+        
+        /* Trái tim đập */
+        .heart-container {
+            margin: 30px 0;
+        }
+        
+        .heart {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+            animation: heartbeat 1.2s infinite;
+            filter: drop-shadow(0 0 10px #ff3366);
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: #ff3366;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        /* Hiệu ứng tuyết rơi */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        
+        /* Thông điệp */
+        .message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .signature {
+            margin-top: 30px;
+            color: #4dff88;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+        
+        /* Animations */
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px #ff3366; }
+            50% { text-shadow: 0 0 20px #ff3366, 0 0 30px #ff3366; }
+            100% { text-shadow: 0 0 10px #ff3366; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .tree { transform: scale(0.8); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Chúc Mừng Giáng Sinh! 🎄</h1>
+        
+        <div class="tree-container">
+            <div class="tree">
+                <div class="tree-part"></div>
+                <div class="tree-part"></div>
+                <div class="tree-part"></div>
+                <div class="star-rays"></div>
+                <div class="star"></div>
+                <div class="trunk"></div>
+                
+                <!-- Đèn nhấp nháy -->
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+            </div>
+        </div>
+        
+        <h2>💝 Trái tim yêu thương 💝</h2>
+        
+        <div class="heart-container">
+            <div class="heart"></div>
+        </div>
+        
+        <div class="message">
+            <p>Chúc Duyên một mùa Giáng Sinh an lành, hạnh phúc!</p>
+            <p>Ngập tràn niềm vui và những điều tuyệt vời nhất.</p>
+            <p>Hãy để sự ấm áp lan tỏa khắp nơi! ❤️</p>
+        </div>
+        
+        <div class="signature">
+            🎁 Merry Christmas! 🎁
+        </div>
+    </div>
+    
+    <!-- Hiệu ứng tuyết rơi -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <script>
+        // Tạo hiệu ứng tuyết rơi
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 50;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                // Kích thước ngẫu nhiên
+                const size = Math.random() * 5 + 3;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // Vị trí bắt đầu ngẫu nhiên
+                const startX = Math.random() * 100;
+                snowflake.style.left = `${startX}vw`;
+                
+                // Tốc độ rơi ngẫu nhiên
+                const duration = Math.random() * 5 + 5;
+                const delay = Math.random() * 5;
+                
+                // Áp dụng animation
+                snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                
+                // Thêm vào container
+                snowflakesContainer.appendChild(snowflake);
+                
+                // Tạo keyframes cho hiệu ứng rơi
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        0% {
+                            top: -10px;
+                            transform: translateX(0) rotate(0deg);
+                        }
+                        100% {
+                            top: 100vh;
+                            transform: translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // Làm cho đèn nhấp nháy ngẫu nhiên hơn
+        function randomizeLights() {
+            const lights = document.querySelectorAll('.light');
+            lights.forEach(light => {
+                // Màu sắc ngẫu nhiên
+                const colors = ['#ff0000', '#00ff00', '#ffff00', '#ff00ff', '#00ffff', '#ff9900', '#ffffff'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                light.style.backgroundColor = randomColor;
+                
+                // Tốc độ nhấp nháy ngẫu nhiên
+                const randomDelay = Math.random() * 2;
+                light.style.animationDelay = `${randomDelay}s`;
+            });
+        }
+        
+        // Khởi tạo
+        document.addEventListener('DOMContentLoaded', function() {
+            createSnowflakes();
+            randomizeLights();
+            
+            // Đổi màu trái tim ngẫu nhiên
+            setInterval(() => {
+                const heart = document.querySelector('.heart');
+                const colors = ['#ff3366', '#ff6699', '#ff0066', '#ff1493', '#ff00ff'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                heart.style.filter = `drop-shadow(0 0 15px ${randomColor})`;
+                const heartBefore = document.querySelector('.heart:before');
+                const heartAfter = document.querySelector('.heart:after');
+                
+                if (heartBefore && heartAfter) {
+                    heartBefore.style.background = randomColor;
+                    heartAfter.style.background = randomColor;
+                }
+            }, 2000);
+            
+            // Hiệu ứng văn bản
+            const title = document.querySelector('h1');
+            setInterval(() => {
+                title.style.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
